@@ -11,21 +11,38 @@
   }
 
   .textContainer {
-    width: 50%;
-    margin-top: 15%;
+    width: 30%;
+    margin-top: 19%;
   }
 
   .formContainer {
-    margin-top: 2%;
+    width: 600px;
+  }
+
+  .inviteContainer {
+    width: 50%;
   }
 
   .coverImage {
     height: 700px;
-    width: 900px;
+    width: 1000px;
+  }
+
+  .letterImage {
+    height: 700px;
+    width: 800px;
+  }
+  
+  .coverContainer {
+    display: flex;
+    justify-content: center;
+    height: 700px;
+    width: 1100px;
+    margin-left: 20px;
   }
 
   .shopImage {
-    height: 700px;
+    display: flex;
     width: 800px;
   }
 
@@ -88,4 +105,13 @@
 
   .btn:hover {
     background-color: #b84d76 !important;
+  }
+
+  .garbageIcon {
+    display: flex;
+    width: 40px;
+    height: 20px;
+    position: relative;
+    top: -3px;
+    left: 120px;
   }

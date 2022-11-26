@@ -9,12 +9,82 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+//code for tabs
 $(document).ready(function(){
     $("#myTab a").click(function(e){
         e.preventDefault();
         $(this).tab("show");
     });
 });
+
+//code for button
+$(document).ready(function(){
+    $('#changetabbutton').click(function(e){
+        e.preventDefault();
+        $('#myTab a[href="#guests"]').tab('show');
+})
+
+//code for shopping list
+let input = document.getElementById("inputText");
+        let list= document.getElementById("list");
+        let minimalValue = 2;
+        let listNum = 0;
+addList=()=>{
+    // get
+    let inputText = filterList(input.value);
+    // set 
+   if (inputText) {
+    list.innerHTML += ` 
+      <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2" id="list${listNum}">
+          <div class="d-flex align-items-center">
+            <input class="form-check-input me-2" type="checkbox" id="check${listNum}" onclick="done(${listNum})">
+            <span class="" id="text${listNum}"> ${inputText} </span>
+          </div>
+          <div class="col-4">
+            <img src="./img/garbage.png" class="hover-overlay ripple shadow-1-strong garbageIcon" onclick="deleteList(${listNum})">
+          </div>                  
+      </li> `;
+        input.value=" ";
+        listNum++;
+
+   }
+}
+
+done=(listId)=>{ 
+    let checkbox = document.getElementById(`check${listId}`);
+    let current = document.getElementById(`text${listId}`);
+    let classExit=current.classList.contains("text-decoration-line-through");
+    if (classExit == true) {
+        current.classList.remove("text-decoration-line-through");
+    }else{
+        current.classList.add("text-decoration-line-through");
+    }
+    
+}
+
+filterList=(x)=>{
+       if (x) {
+            if (x.length >= minimalValue) {
+                return x;
+            }
+            else{
+                alert("Please enter a value")
+            }
+       }
+       else{
+            return false;
+       }
+}
+
+deleteList=(listId)=>{
+    let current = document.getElementById(`text${listId}`).innerHTML;
+         let p = document.getElementById("list")
+        let c = document.getElementById(`list${listId}`);
+        p.removeChild(c);
+};
+
+})
 </script>
 </head>
 <body>
@@ -48,7 +118,8 @@ $(document).ready(function(){
               <div class="textContainer">
                 <h1 class="mt-1">Let's Celebrate Your Birthday!</h1>
                 <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. </p>
-              </div>
+                <button type="submit" class="btn btn-primary ms-2" id="changetabbutton" style="background-color: #EA4C88; border-color: #EA4C88; border-radius: 20px; width: 180px;" >Let's Start</button>
+               </div>
               <div class="coverContainer">
                 <img src="./img/landing-page.webp" class="coverImage">
               </div>
@@ -56,12 +127,16 @@ $(document).ready(function(){
         </div>
         <div class="tab-pane fade" id="guests">
             <div class="pageContainer">
+              <div class="inviteContainer">
                 <form>
-                  <div class="form-group">
-                    <h6 class="mb-3" style="font-weight: 700; margin-left: -10px; font-size: 20px; color: rgb(44, 44, 91);">Guests List</h6>
-                    <textarea placeholder="I want to invite..." class="form-control" id="exampleFormControlTextarea1" rows="23" style="width: 600px;"></textarea>
-                  </div>
+                    
+                    <div class="form-group">
+                        <h6 class="mb-3" style="font-weight: 700; margin-left: -10px; font-size: 20px; color: rgb(44, 44, 91);">Guests List</h6>
+                        <textarea placeholder="I want to invite..." class="form-control" id="exampleFormControlTextarea1" rows="23" style="width: 600px;"></textarea>
+                        <button type="submit" class="btn btn-primary ms-2" id="changetabbutton" style="background-color: #EA4C88; border-color: #EA4C88; border-radius: 20px; width: 180px; margin-top: 20px;" >Copy to Clipboard</button>
+                    </div>
                 </form>
+              </div>
               <div class="guestContainer">
                 <img src="./img/guest.png" class="guestImage">
               </div>
@@ -69,36 +144,19 @@ $(document).ready(function(){
         </div>
         <div class="tab-pane fade" id="shoplist">
             <div class="pageContainer">
-                <div class="card" style="border-radius: 15px; width: 600px;">
+                <div class="card" style="border-radius: 15px; width: 700px;">
                     <div class="card-body p-5">  
                         <h6 class="mb-3" style="font-weight: 700; margin-left: 10px; font-size: 20px; color: rgb(44, 44, 91);">Shoping List</h6>
                         
                         <form class="d-flex justify-content-center align-items-center mb-4">
                             <div class="form-outline flex-fill">
-                                <input type="text" id="form3" style="font-size: 16px;" class="form-control form-control-lg" placeholder="What do you need to buy?" />
+                                <input type="text" id="inputText" style="font-size: 16px;" class="form-control form-control-lg" placeholder="What do you need to buy?" />
                             </div>
-                            <button type="submit" class="btn btn-primary ms-2" style="background-color: #EA4C88; border-color: #EA4C88;">Add</button>
+                            <button type="submit" onclick="addList()" class="btn btn-primary ms-2" style="background-color: #EA4C88; border-color: #EA4C88;">Add</button>
                         </form>
                         
-                        <ul class="list-group mb-0">
-                            <li
-                            class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
-                            <div class="d-flex align-items-center">
-                                <input class="form-check-input me-2" type="checkbox" value="" aria-label="..." />
-                                Cras justo odio
-                            </div>
-                            <a href="#!" data-mdb-toggle="tooltip" title="Remove item">
-                                <i class="fas fa-times text-primary"></i>
-                            </a>
-                            </li>
-                            <li class="list-group-item d-flex d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
-                            <div class="d-flex align-items-center">
-                                <input class="form-check-input me-2" type="checkbox" value="" aria-label="..." checked />
-                                <s>Dapibus ac facilisis in</s>
-                            </div>
-                            <a href="#!" data-mdb-toggle="tooltip" title="Remove item">
-                                <i class="fas fa-times text-primary"></i>
-                            </a>
+                        <ul class="list-group mb-0" id="list">
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
                             </li>
                         </ul>
                     </div>
@@ -145,10 +203,11 @@ $(document).ready(function(){
                             </form>
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary ms-2" id="changetabbutton" style="background-color: #EA4C88; border-color: #EA4C88; border-radius: 20px; width: 180px; margin-top: 20px;" >Generate Invitation</button>
                 </div>
                 <div class="coverContainer">
-                    <img src="./img/invitations.png" class="coverImage">
-              </div>
+                    <img src="./img/invitations.png" class="letterImage">
+                </div>
             </div>
       </div>
     </div>
