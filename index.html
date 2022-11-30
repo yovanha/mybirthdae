@@ -42,9 +42,9 @@
           <div class="home-text w-30">
             <h1 class="mt-1">Let's Celebrate Your Birthday!</h1>
             <p>
-              Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan
-              american apparel, butcher voluptate nisi qui. Raw denim you
-              probably haven't heard of them jean shorts Austin.
+              In My Birtae you can have in one place everything you need to
+              organized your birthday, make your guests list, your shopping list and
+              the invitationsyou like to share. For free!
             </p>
             <button
               type="submit"
@@ -61,24 +61,27 @@
       </section>
       <!-- Guest view -->
       <section class="tab-pane fade" id="guests">
-        <div class="pageContainer">
-          <div class="inviteContainer w-50">
-              <div class="form-group">
-                <h6 class="field">Guests List</h6>
+        <div class="pageContainer ">
+          <div class="inviteContainer w-50 ">
+              <form class="form-group needs-validation" novalidate>
+                <h6 class="field">Guests List</h6>                
                 <textarea
-                  placeholder="I want to invite..."
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="10"
+                placeholder="I want to invite..."
+                class="form-control"
+                id="validationCustom03"
+                rows="10"
+                required
                 ></textarea>
+                <div class="invalid-feedback">
+                    Please add a person to the list.
+                </div>
                 <button
                   type="submit"
                   class="btn btn-primary btn-rounded"
-                  id="changetabbutton"
                 >
                   Copy to Clipboard
                 </button>
-              </div>
+              </form>
           </div>
           <figure class="guestContainer w-50">
             <img src="./img/guest.png" class="img-fluid img__guest" />
@@ -92,23 +95,24 @@
             <div class="card-body p-5">
               <h6 class="field">Shoping List</h6>
               <div class="input__list">
-                <div class="form-outline flex-fill">
-                  <input
+                  <div class="form-outline flex-fill">
+                   <input
                     type="text"
                     id="inputText"
                     style="font-size: 16px"
                     class="form-control form-control-lg"
                     placeholder="What do you need to buy?"
-                  />
-                </div>
-                <button
+                    required
+                    />
+                  </div>
+                  <button
                   type="submit"
                   onclick="addList()"
                   class="btn btn-primary ms-2 btn__baseline"
-                >
-                  Add
-                </button>
-            </div>
+                  >
+                    Add
+                  </button>
+              </div>
               <ul class="list-group mb-0" id="list">
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2"
@@ -129,7 +133,7 @@
               <div class="card-body">
                 <h6 class="field">Title</h6>
                 <form
-                  class="d-flex justify-content-center align-items-center mb-4"
+                  class="d-flex justify-content-center align-items-center mb-4 needs-validation" novalidate 
                 >
                   <div class="form-outline flex-fill">
                     <input
@@ -138,8 +142,12 @@
                       style="font-size: 16px"
                       class="form-control form-control-lg"
                       placeholder="Party name"
+                      required
                     />
                   </div>
+                  <div class="invalid-feedback">
+                    Please add a person to the list.
+                </div>
                 </form>
                 <div class="flex input-time">
                   <div class="w-40">
@@ -188,6 +196,7 @@
                       style="font-size: 16px"
                       class="form-control form-control-lg"
                       placeholder="Where is your party?"
+                      
                     />
                   </div>
                 </form>
@@ -234,6 +243,25 @@
           $('#myTab a[href="#guests"]').tab("show");
         });
 
+        //code to validate inputs
+        (function () {
+        'use strict'
+        // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
+        var forms = document.querySelectorAll('.needs-validation')
+            // Bucle sobre ellos y evitar el envío
+            Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault()
+                  event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+
         //code for shopping list
         let input = document.getElementById("inputText");
         let list = document.getElementById("list");
@@ -247,7 +275,7 @@
             list.innerHTML += ` 
       <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2" id="list${listNum}">
           <div class="d-flex align-items-center item">
-            <input class="form-check-input me-2" type="checkbox" id="check${listNum}" onclick="done(${listNum})">
+            <input class="form-check-input me-2 checkBox" type="checkbox" id="check${listNum}" onclick="done(${listNum})">
             <span class="" id="text${listNum}"> ${inputText} </span>
           </div>
           <div class="col-4">
@@ -277,7 +305,7 @@
             if (x.length >= minimalValue) {
               return x;
             } else {
-              alert("Please enter a value");
+                alert('Please add a value')
             }
           } else {
             return false;
